@@ -7,7 +7,8 @@ CREATE TABLE `registrations` (
 	`corsages` integer DEFAULT 0 NOT NULL,
 	`boutonnieres` integer DEFAULT 0 NOT NULL,
 	`stripe_session_id` text,
-	`payment_status` text DEFAULT 'pending',
+	`payment_status` text DEFAULT 'not_applicable',
+	`amount_paid` integer DEFAULT 0,
 	`created_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`updated_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

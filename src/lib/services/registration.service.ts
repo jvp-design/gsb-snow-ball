@@ -25,7 +25,7 @@ const create_registration = async (
 			name: data.name,
 			email: data.email,
 			attendees: data.attendees,
-			classes: data.classes.join(','),
+			classes: data.classes.join('~~'),
 			corsages: data.corsages,
 			boutonnieres: data.boutonnieres,
 			stripe_session_id: data.stripe_session_id,
@@ -36,6 +36,9 @@ const create_registration = async (
 
 const get_all_registrations = async () => db.select().from(registration_table);
 
+const get_registration_by_id = async (id?: string | null): Promise<RegistrationType | undefined> =>
+	id ? db.query.registration_table.findFirst({ where: eq(registration_table.id, id) }) : undefined;
+
 const get_registration_by_stripe_session_id = async (
 	session_id: string
 ): Promise<RegistrationType | undefined> => {
@@ -44,10 +47,16 @@ const get_registration_by_stripe_session_id = async (
 	});
 };
 
-const handle_successful_payment = async (session_id: string): Promise<RegistrationType[]> => {
+const handle_successful_payment = async (
+	session_id: string | null,
+	amount_paid: number
+): Promise<RegistrationType[]> => {
+	if (!session_id) {
+		return [];
+	}
 	return db
 		.update(registration_table)
-		.set({ payment_status: 'paid', updated_at: new Date() })
+		.set({ payment_status: 'paid', amount_paid, updated_at: new Date() })
 		.where(eq(registration_table.stripe_session_id, session_id))
 		.returning();
 };
@@ -63,6 +72,7 @@ const handle_canceled_payment = async (session_id: string): Promise<Registration
 export default {
 	create_registration,
 	get_all_registrations,
+	get_registration_by_id,
 	get_registration_by_stripe_session_id,
 	handle_successful_payment,
 	handle_canceled_payment

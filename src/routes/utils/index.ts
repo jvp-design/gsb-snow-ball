@@ -30,7 +30,8 @@ export const schema = z.object({
 		.default(0)
 		.refine(() => is_flower_ordering_open(), {
 			message: FLOWERS_EXPIRED_MESSAGE
-		})
+		}),
+	token: z.string().min(1, 'Token is missing')
 });
 
 export type FormSchema = z.infer<typeof schema>;
