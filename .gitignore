@@ -212,3 +212,6 @@ db.sqlite
 .sentryclirc
 
 ca-certificate.*
+
+# Databases
+*.db

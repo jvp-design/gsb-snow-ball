@@ -12,6 +12,8 @@
 	import '../app.css';
 
 	import { ModeWatcher } from 'mode-watcher';
+	import CalendarDownload from './calendar-download.svelte';
+	import { Separator } from '$lib/components/ui/separator';
 
 	type Props = {
 		data: PageData;
@@ -78,7 +80,36 @@
 
 	<div class="fixed right-0 top-0 z-10"></div>
 	<section class="relative flex-1">
-		{@render children()}
+		<div class="mx-auto grid max-w-5xl grid-cols-1 gap-3 px-4 pt-4 sm:pt-8 md:grid-cols-2">
+			<div class="p-2 backdrop-blur-md">
+				<p>GSB LS Parent Coordinators Present</p>
+				<h1
+					class="font-rundeck text-lg text-primary sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl"
+				>
+					2025 Gill St Bernard's Lower School Snow "Ball"
+				</h1>
+				<div class="space-y-2">
+					<p class="italic md:text-lg lg:text-xl xl:text-2xl">
+						Parent-child dance for 1st-4th Graders
+					</p>
+					<time class="block md:text-lg lg:text-xl xl:text-2xl" datetime="2024-02-20T17:30-19:00">
+						Thursday, February 20; 5:30pm-7:00pm
+					</time>
+					<p class="md:text-lg lg:text-xl xl:text-2xl">Evans Hall</p>
+					<p>Come in concert attire, please</p>
+					<p>Pizza, snacks, and water will be provided</p>
+					<CalendarDownload
+						title="Snow Ball Dance"
+						description="Parent-child dance for 1st-4th Graders. Come in concert attire. Pizza, snacks and water provided."
+						start_time="2025-02-20T17:30:00"
+						end_time="2025-02-20T19:00:00"
+						location="Gill St. Bernard's School, 25 St Bernards Rd Box 604, Gladstone, NJ 07934, USA"
+					/>
+				</div>
+			</div>
+			<Separator class="md:hidden" />
+			{@render children()}
+		</div>
 	</section>
 
 	<div class="flex items-center justify-between">
