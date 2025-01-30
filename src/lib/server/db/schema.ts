@@ -1,4 +1,4 @@
-import { new_id } from '$lib/utils/id';
+import { new_id } from '../../utils/id';
 
 import { type InferInsertModel, type InferSelectModel, sql } from 'drizzle-orm';
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
@@ -16,6 +16,9 @@ export const registration_table = sqliteTable('registrations', {
 	stripe_session_id: text('stripe_session_id'),
 	payment_status: text('payment_status').default('pending'), // pending, paid, canceled
 	created_at: integer('created_at', { mode: 'timestamp' })
+		.notNull()
+		.default(sql`CURRENT_TIMESTAMP`),
+	updated_at: integer('updated_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`)
 });

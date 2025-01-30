@@ -11,12 +11,8 @@ export const is_flower_ordering_open = () => DateTime.now().setZone('UTC') < CUT
 const FLOWERS_EXPIRED_MESSAGE = 'Flower orders are no longer available (ended February 11th, 2025)';
 
 export const schema = z.object({
-	name: z.string().min(1, 'Name is required').default('a'),
-	email: z
-		.string()
-		.min(1, 'Email is required')
-		.email('The email address is badly formatted')
-		.default('a@b.co'),
+	name: z.string().min(1, 'Name is required'),
+	email: z.string().min(1, 'Email is required').email('The email address is badly formatted'),
 	attendees: z
 		.number({ message: 'Please enter a valid number' })
 		.min(2, 'At least two attendees are required (at least 1 child and 1 adult)'),
