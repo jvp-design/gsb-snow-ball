@@ -3,17 +3,24 @@
 	import { deepMerge, MetaTags } from 'svelte-meta-tags';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
+	import {
+		PUBLIC_END_TIME,
+		PUBLIC_EVENT_DESCRIPTION,
+		PUBLIC_EVENT_TITLE,
+		PUBLIC_LOCATION,
+		PUBLIC_START_TIME
+	} from '$env/static/public';
 	import LightSwitch from '$lib/components/LightSwitch.svelte';
 	import Snowman from '$lib/components/Snowman.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { Separator } from '$lib/components/ui/separator';
 
 	import type { PageData } from './$types';
+	import CalendarDownload from './calendar-download.svelte';
 
 	import '../app.css';
 
 	import { ModeWatcher } from 'mode-watcher';
-	import CalendarDownload from './calendar-download.svelte';
-	import { Separator } from '$lib/components/ui/separator';
 
 	type Props = {
 		data: PageData;
@@ -99,11 +106,11 @@
 					<p>Come in concert attire, please</p>
 					<p>Pizza, snacks, and water will be provided</p>
 					<CalendarDownload
-						title="Snow Ball Dance"
-						description="Parent-child dance for 1st-4th Graders. Come in concert attire. Pizza, snacks and water provided."
-						start_time="2025-02-20T17:30:00"
-						end_time="2025-02-20T19:00:00"
-						location="Gill St. Bernard's School, 25 St Bernards Rd Box 604, Gladstone, NJ 07934, USA"
+						title={PUBLIC_EVENT_TITLE}
+						description={PUBLIC_EVENT_DESCRIPTION}
+						start_time={PUBLIC_START_TIME}
+						end_time={PUBLIC_END_TIME}
+						location={PUBLIC_LOCATION}
 					/>
 				</div>
 			</div>

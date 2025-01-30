@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "e44b9d23-7122-45b5-8056-f058b19ccde5",
+  "id": "82a430a8-bc90-4832-99c1-915d54fcec19",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "registrations": {
@@ -71,7 +71,15 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'pending'"
+          "default": "'not_applicable'"
+        },
+        "amount_paid": {
+          "name": "amount_paid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
         },
         "created_at": {
           "name": "created_at",

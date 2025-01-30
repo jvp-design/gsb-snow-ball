@@ -2,31 +2,19 @@
 	import { Button } from '$lib/components/ui/button';
 
 	import { CalendarArrowDown, CalendarPlus2 } from 'lucide-svelte';
+	import {
+		type CalendarEvent,
+		generate_google_calendar_url,
+		generate_ics_content
+	} from '$lib/utils/calendar';
 
-	type Props = {
-		title: string;
-		description: string;
-		start_time: string;
-		end_time: string;
-		location: string;
-	};
-	let { title, description, start_time, end_time, location }: Props = $props();
+	type Props = CalendarEvent;
+	let event: Props = $props();
 
 	function generate_ics_file() {
-		const icsContent = [
-			'BEGIN:VCALENDAR',
-			'VERSION:2.0',
-			'BEGIN:VEVENT',
-			`DTSTART:${new Date(start_time).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-			`DTEND:${new Date(end_time).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-			`SUMMARY:${title}`,
-			`DESCRIPTION:${description}`,
-			`LOCATION:${location}`,
-			'END:VEVENT',
-			'END:VCALENDAR'
-		].join('\n');
+		const ics_content = generate_ics_content(event);
 
-		const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+		const blob = new Blob([ics_content], { type: 'text/calendar;charset=utf-8' });
 		const url = window.URL.createObjectURL(blob);
 		const link = document.createElement('a');
 		link.href = url;
@@ -37,9 +25,7 @@
 		window.URL.revokeObjectURL(url);
 	}
 
-	let google_calendar_url = $derived(
-		`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${new Date(start_time).toISOString().replace(/[-:]/g, '').split('.')[0]}Z/${new Date(end_time).toISOString().replace(/[-:]/g, '').split('.')[0]}Z&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`
-	);
+	let google_calendar_url = $derived(generate_google_calendar_url(event));
 </script>
 
 <div class="flex gap-4">

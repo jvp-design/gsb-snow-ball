@@ -7,6 +7,9 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
+		namespace Superforms {
+			type Message = import('./lib/types/super-forms').Message;
+		}
 	}
 }
 

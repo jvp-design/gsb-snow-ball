@@ -2,7 +2,12 @@
 	import { fade } from 'svelte/transition';
 	import { superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { PUBLIC_BOUTONNIERE_PRICE, PUBLIC_CORSAGE_PRICE } from '$env/static/public';
+	import { enhance } from '$app/forms';
+	import {
+		PUBLIC_BOUTONNIERE_PRICE,
+		PUBLIC_CORSAGE_PRICE,
+		PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY
+	} from '$env/static/public';
 	import FlowersCountdown from '$lib/components/FlowersCountdown.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { Checkbox } from '$lib/components/ui/checkbox';
@@ -18,8 +23,11 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Separator } from '$lib/components/ui/separator';
 	import { class_options, type ClassOptionType } from '$lib/types';
+	import { currency_formatter } from '$lib/utils/formatter';
+	import { create_re_captcha_client } from '$lib/utils/recaptcha';
 
 	import type { PageProps } from './$types';
+	import Alert from './alert.svelte';
 	import { schema } from './utils';
 
 	import { Loader } from 'lucide-svelte';
@@ -30,16 +38,10 @@
 
 	const form = superForm(data.form, {
 		validators: zodClient(schema),
-		onSubmit: () => {
-			loading = true;
-		},
-		onResult: () => {
-			loading = false;
-		},
 		multipleSubmits: 'prevent'
 	});
 
-	const { form: formData, enhance, constraints, errors } = form;
+	const { form: formData, constraints, errors, message } = form;
 
 	type HandleClassesCheckedPayloadType = {
 		value: boolean;
@@ -54,13 +56,6 @@
 		}
 	};
 
-	const currency_formatter = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
-	});
-
 	let total = $derived(
 		(Number($formData.corsages ?? 0) * Number(PUBLIC_CORSAGE_PRICE ?? 0)) / 100 +
 			(Number($formData.boutonnieres ?? 0) * Number(PUBLIC_BOUTONNIERE_PRICE ?? 0)) / 100
@@ -68,11 +63,34 @@
 	let total_string = $derived(currency_formatter.format(total));
 </script>
 
+<svelte:head>
+	<script
+		src="https://www.google.com/recaptcha/api.js?render={PUBLIC_GOOGLE_RECAPTCHA_SITE_KEY}"
+		async
+		defer
+	></script>
+</svelte:head>
+
 <div class="p-2 backdrop-blur-md">
 	<h2 class="font-rundeck text-primary sm:text-lg md:pt-6 md:text-xl lg:text-2xl xl:text-3xl">
 		Register Below
 	</h2>
-	<form method="POST" class="space-y-2" use:enhance>
+	{#if $message}
+		<Alert {...$message} />
+	{/if}
+	<form
+		method="POST"
+		class="space-y-2"
+		use:enhance={async ({ formData }) => {
+			loading = true;
+			const token = await create_re_captcha_client(formData.get('token'), window.grecaptcha);
+			formData.append('token', String(token));
+			return async ({ update }) => {
+				update();
+				loading = false;
+			};
+		}}
+	>
 		<Field {form} name="name" class="space-y-0">
 			<Control>
 				{#snippet children({ props })}

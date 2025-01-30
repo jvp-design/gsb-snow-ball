@@ -11,7 +11,7 @@ const handle_webhook_event = async (event: Stripe.Event) => {
 		case 'checkout.session.completed': {
 			const session = event.data.object;
 			if (session.payment_status === 'paid') {
-				await registration_service.handle_successful_payment(session.id);
+				await registration_service.handle_successful_payment(session.id, session.amount_total ?? 0);
 			}
 			break;
 		}
