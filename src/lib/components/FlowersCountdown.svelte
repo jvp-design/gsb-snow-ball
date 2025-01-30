@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { CUTOFF_DATE } from '$lib/constants';
 
-	import { DateTime, Duration } from 'luxon';
+	import { DateTime } from 'luxon';
 
 	let timeRemaining: string = '';
 	let intervalId: ReturnType<typeof setInterval>;
