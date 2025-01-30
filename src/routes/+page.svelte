@@ -181,6 +181,18 @@
 					</div>
 				{/each}
 			</div>
+			<div class="h-5">
+				<FieldErrors>
+					{#snippet children({ errors, errorProps })}
+						<span
+							class="{errors?.length ? 'opacity-100' : 'opacity-0'} dark:text-red-200"
+							{...errorProps}
+						>
+							{errors[0]}
+						</span>
+					{/snippet}
+				</FieldErrors>
+			</div>
 		</Fieldset>
 		<Separator />
 		<h3 class="font-medium lg:text-lg xl:text-xl">
