@@ -20,7 +20,6 @@
 	import { class_options, type ClassOptionType } from '$lib/types';
 
 	import type { PageProps } from './$types';
-	import CalendarDownload from './calendar-download.svelte';
 	import { schema } from './utils';
 
 	import { Loader } from 'lucide-svelte';

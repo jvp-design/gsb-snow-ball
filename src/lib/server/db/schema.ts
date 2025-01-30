@@ -14,7 +14,7 @@ export const registration_table = sqliteTable('registrations', {
 	corsages: integer('corsages').notNull().default(0),
 	boutonnieres: integer('boutonnieres').notNull().default(0),
 	stripe_session_id: text('stripe_session_id'),
-	payment_status: text('payment_status').default('pending'), // pending, paid, canceled
+	payment_status: text('payment_status').default('not_applicable'), // pending, paid, canceled, not_applicable
 	created_at: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),

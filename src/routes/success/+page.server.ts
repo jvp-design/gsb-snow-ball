@@ -3,8 +3,6 @@ import registration_service from '$lib/services/registration.service';
 
 import type { PageServerLoad } from './$types';
 
-import { eq } from 'drizzle-orm';
-
 export const load: PageServerLoad = async (event) => {
 	const session_id = event.url.searchParams.get('session_id');
 

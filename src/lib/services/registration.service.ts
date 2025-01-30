@@ -34,10 +34,12 @@ const create_registration = async (
 		.returning();
 };
 
+const get_all_registrations = async () => db.select().from(registration_table);
+
 const get_registration_by_stripe_session_id = async (
 	session_id: string
-): Promise<RegistrationType> => {
-	return db.query.registrations.findFirst({
+): Promise<RegistrationType | undefined> => {
+	return db.query.registration_table.findFirst({
 		where: eq(registration_table.stripe_session_id, session_id)
 	});
 };
@@ -60,6 +62,7 @@ const handle_canceled_payment = async (session_id: string): Promise<Registration
 
 export default {
 	create_registration,
+	get_all_registrations,
 	get_registration_by_stripe_session_id,
 	handle_successful_payment,
 	handle_canceled_payment
