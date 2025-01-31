@@ -2,7 +2,7 @@ import { payment_status_options } from '../../types/db-options';
 import { new_id } from '../../utils/id';
 
 import { type InferInsertModel, type InferSelectModel, sql } from 'drizzle-orm';
-import { integer, pgEnum, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { boolean, integer, pgEnum, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const payment_status_choices = pgEnum('payment_status_choices', payment_status_options);
 
@@ -35,6 +35,23 @@ export const user_table = pgTable('users', {
 		.$defaultFn(() => new_id('user'))
 		.primaryKey(),
 	email: text('email').notNull(),
-	token: text('token').notNull(),
-	token_expiration: timestamp('token_expiration')
+	token: text('token'),
+	token_expiration: timestamp('token_expiration'),
+	is_admin: boolean('is_admin').default(false)
 });
+
+export type UserType = InferSelectModel<typeof user_table>;
+
+export const session_table = pgTable('session', {
+	id: text('id').primaryKey(),
+	user_id: text('user_id')
+		.notNull()
+		.references(() => user_table.id, { onDelete: 'cascade' }),
+	expires_at: timestamp('expires_at', {
+		withTimezone: true,
+		mode: 'date'
+	}).notNull()
+});
+
+export type SessionType = InferSelectModel<typeof session_table>;
+export type NewSessionType = InferInsertModel<typeof session_table>;

@@ -3,11 +3,13 @@ export const nanoid = customAlphabet('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghi
 
 export type Prefixes = {
 	registration: string;
+	token: string;
 	user: string;
 };
 
 const prefixes: Readonly<Prefixes> = {
 	registration: 'registration',
+	token: 'token',
 	user: 'user'
 };
 

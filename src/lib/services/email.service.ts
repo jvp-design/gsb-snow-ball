@@ -1,4 +1,4 @@
-import { BASE_URL } from '$env/static/private';
+import { BASE_URL, NOREPLY_EMAIL } from '$env/static/private';
 import {
 	PUBLIC_END_TIME,
 	PUBLIC_EVENT_DESCRIPTION,
@@ -37,6 +37,7 @@ const send_registration_confirmed_email = async (to: string, id: string) => {
 
 	mailer.send_mail({
 		to,
+		from: `GSB Snow Ball <${NOREPLY_EMAIL}>`,
 		subject: `Event Invitation: ${title}`,
 		text: `You have been invited to ${title}. Please find the calendar invitation attached. To view your registration please go to ${BASE_URL}/registrations/${id}`,
 		html: {
@@ -102,6 +103,50 @@ const send_registration_confirmed_email = async (to: string, id: string) => {
 	});
 };
 
+type SendLoginEmailPayloadType = {
+	email: string;
+	token: string;
+};
+const send_login_email = async ({ email, token }: SendLoginEmailPayloadType) => {
+	const url = `${BASE_URL}/admin/token/${token}`;
+	mailer.send_mail({
+		to: email,
+		from: `GSB Snow Ball Login <${NOREPLY_EMAIL}>`,
+		subject: 'GSB Snow Ball Login',
+		text: `To log in to the admin section please click on this link: ${url}`,
+		html: {
+			title: 'GSB Snow Ball Login',
+			style: `
+				body { 
+						font-family: Arial, sans-serif;
+						line-height: 1.6;
+						color: #333;
+					}
+					main {
+						max-width: 600px;
+						margin: 0 auto;
+						padding: 20px;
+					}
+					h2 {
+						color: hsl(203 100% 32%);
+					}
+				`,
+			body: `
+				<main>
+					<h2>GSB Snow Ball Login</h2>
+					<p>This email address was used to log into the 2025 GSB Snow Ball admin site.</p>
+					<p>Please click on the link below to log in.</p>
+					<p><a href="${url}">${url}</a></p>
+					<br />
+					<p>Regards,</p>
+					<p>Your friend at JVP Design</p>
+				</main>
+			`
+		}
+	});
+};
+
 export default {
-	send_registration_confirmed_email
+	send_registration_confirmed_email,
+	send_login_email
 };
