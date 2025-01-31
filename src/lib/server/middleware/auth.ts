@@ -10,9 +10,9 @@ export const must_be_logged_in = (event: ServerLoadEvent | RequestEvent) => {
 
 const is_admin_user = (event: ServerLoadEvent | RequestEvent) => event.locals?.user?.is_admin;
 
-export const must_be_admin = (event: ServerLoadEvent | RequestEvent) => {
+export const must_be_admin = (event: ServerLoadEvent | RequestEvent, location?: string) => {
 	if (!is_admin_user(event)) {
-		return redirect(303, `/`);
+		return redirect(303, location ?? `/`);
 	}
 };
 

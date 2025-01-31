@@ -39,22 +39,22 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 		// reCAPTCHA
-		// const g_token = form.data.token;
-		// if (!g_token) {
-		// 	return message(form, {
-		// 		type: 'error',
-		// 		title: 'Invalid reCAPTCHA',
-		// 		text: 'There was an error with the reCAPTCHA on your form submission. Please try again later.'
-		// 	});
-		// }
-		// const res = await validate_re_captcha_server(g_token, fetch, GOOGLE_RECAPTCHA_SECRET_KEY);
-		// if (!res.success) {
-		// 	return message(form, {
-		// 		type: 'error',
-		// 		title: 'Failed reCAPTCHA',
-		// 		text: 'There was an error with the reCAPTCHA on your form submission. Please try again later.'
-		// 	});
-		// }
+		const g_token = form.data.token;
+		if (!g_token) {
+			return message(form, {
+				type: 'error',
+				title: 'Invalid reCAPTCHA',
+				text: 'There was an error with the reCAPTCHA on your form submission. Please try again later.'
+			});
+		}
+		const res = await validate_re_captcha_server(g_token, fetch, GOOGLE_RECAPTCHA_SECRET_KEY);
+		if (!res.success) {
+			return message(form, {
+				type: 'error',
+				title: 'Failed reCAPTCHA',
+				text: 'There was an error with the reCAPTCHA on your form submission. Please try again later.'
+			});
+		}
 
 		let msg: Message = {
 			type: 'success',
