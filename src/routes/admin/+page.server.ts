@@ -62,16 +62,18 @@ export const actions: Actions = {
 			text: ''
 		};
 
-		const { token } = await auth_service.create_auth_token_from_email(form.data.email);
-		if (!token) {
-			msg.type = 'error';
-			msg.title = 'Token generation failed';
-			msg.text = 'There was an error generating your login token. Please try again later.';
-		} else {
-			email_service.send_login_email({ email: form.data.email, token });
+		try {
+			const { token } = await auth_service.create_auth_token_from_email(form.data.email);
+			if (token) {
+				email_service.send_login_email({ email: form.data.email, token });
+			}
 			msg.title = 'Email sent';
 			msg.text =
 				'If your email is in the system then a message has been sent to that address. Please click on that link to log in. You can close this window.';
+		} catch (err) {
+			msg.type = 'error';
+			msg.title = 'Token generation failed';
+			msg.text = 'There was an error generating your login token. Please try again later.';
 		}
 
 		return message(form, msg);

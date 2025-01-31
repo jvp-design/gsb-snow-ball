@@ -17,9 +17,21 @@ const create_token = (minutes: number = 60): CreateTokenReturnType => {
 };
 
 const create_auth_token_from_email = async (email: string) => {
-	const { token, token_expiration } = create_token();
-	await db.update(user_table).set({ token, token_expiration }).where(eq(user_table.email, email));
-	return { token };
+	try {
+		const { token, token_expiration } = create_token();
+		const res = await db
+			.update(user_table)
+			.set({ token, token_expiration })
+			.where(eq(user_table.email, email))
+			.returning();
+		if (!res.length) {
+			return { token: undefined };
+		}
+		return { token };
+	} catch (err) {
+		console.error('Error generating auth token', err);
+		throw err;
+	}
 };
 
 const get_user_from_token = async (token: string) =>
