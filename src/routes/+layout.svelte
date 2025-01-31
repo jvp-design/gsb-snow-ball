@@ -44,7 +44,7 @@
 		<LightSwitch />
 	</div>
 	{#if page.data.is_admin}
-		<header class="inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl justify-end">
+		<header class="inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl">
 			<nav>
 				<Button variant="link" class="cursor-pointer" href="/registrations">
 					Registrations (Admin Only)
