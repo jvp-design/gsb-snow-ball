@@ -66,7 +66,7 @@
 		<p>
 			Plans changed? Either get in touch with Jill or Pam in the LS office or send a message to <Button
 				variant="link"
-				class="px-0"
+				class="p-0"
 				href="mailto:info@jvp.design?subject=Cancel Snow Ball Registration"
 			>
 				info@jvp.design
