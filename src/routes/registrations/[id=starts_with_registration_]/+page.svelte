@@ -36,24 +36,24 @@
 		<li>
 			<Label class="text-xs italic">Classes</Label>
 			<ul>
-				{#each data.registration.classes.split('~~') as c}
+				{#each (data.registration?.classes ?? '').split('~~') as c}
 					<li>{c}</li>
 				{/each}
 			</ul>
 		</li>
-		{#if data.registration.corsages}
+		{#if data.registration?.corsages}
 			<li>
 				<Label class="text-xs italic"># of Corsages Purchased</Label>
 				<span class="block">{data.registration?.corsages}</span>
 			</li>
 		{/if}
-		{#if data.registration.boutonnieres}
+		{#if data.registration?.boutonnieres}
 			<li>
 				<Label class="text-xs italic"># of Boutonnières Purchased</Label>
 				<span class="block">{data.registration?.boutonnieres}</span>
 			</li>
 		{/if}
-		{#if data.registration.amount_paid}
+		{#if data.registration?.amount_paid}
 			<li>
 				<Label class="text-xs italic">Total Paid</Label>
 				<span class="block">{currency_formatter.format(data.registration.amount_paid / 100)}</span>
@@ -72,7 +72,7 @@
 				info@jvp.design
 			</Button> and please include the email address used to sign up.
 		</p>
-		{#if data.registration.amount_paid}
+		{#if data.registration?.amount_paid}
 			{#if diff.milliseconds > 0}
 				Upon receiving your request to cancel your registration we will refund your floral purchase
 				as soon as possible
