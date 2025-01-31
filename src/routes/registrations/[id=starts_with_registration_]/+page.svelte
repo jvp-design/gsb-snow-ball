@@ -56,7 +56,7 @@
 		{#if data.registration.amount_paid}
 			<li>
 				<Label class="text-xs italic">Total Paid</Label>
-				<span class="block">{currency_formatter(data.registration.amount_paid / 100)}</span>
+				<span class="block">{currency_formatter.format(data.registration.amount_paid / 100)}</span>
 			</li>
 		{/if}
 	</ul>
