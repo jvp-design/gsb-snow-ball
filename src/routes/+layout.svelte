@@ -43,13 +43,15 @@
 	<div class="fixed right-0 top-0">
 		<LightSwitch />
 	</div>
-	<header class="inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl justify-end">
-		<nav>
-			<Button variant="link" class="cursor-pointer" href="/registrations">
-				Registrations (Admin Only)
-			</Button>
-		</nav>
-	</header>
+	{#if page.data.is_admin}
+		<header class="inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl justify-end">
+			<nav>
+				<Button variant="link" class="cursor-pointer" href="/registrations">
+					Registrations (Admin Only)
+				</Button>
+			</nav>
+		</header>
+	{/if}
 	<main class="flex-1">
 		<div class="absolute inset-0 -z-10">
 			<Snowman

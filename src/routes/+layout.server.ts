@@ -2,7 +2,7 @@ import type { MetaTagsProps } from 'svelte-meta-tags';
 
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ url }) => {
+export const load: LayoutServerLoad = async ({ url, locals }) => {
 	const base_meta_tags = Object.freeze({
 		title: 'Snow Ball',
 		titleTemplate: '%s | GSB 2025 Snow Ball',
@@ -30,6 +30,7 @@ export const load: LayoutServerLoad = async ({ url }) => {
 	}) satisfies MetaTagsProps;
 
 	return {
-		base_meta_tags
+		base_meta_tags,
+		is_admin: locals.user?.is_admin
 	};
 };
