@@ -27,7 +27,7 @@
 	import { create_re_captcha_client } from '$lib/utils/recaptcha';
 
 	import type { PageProps } from './$types';
-	import Alert from './alert.svelte';
+	import Alert from '$lib/components/alert.svelte';
 	import { schema } from './utils';
 
 	import { Loader } from 'lucide-svelte';

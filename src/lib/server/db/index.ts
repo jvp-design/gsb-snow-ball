@@ -1,18 +1,25 @@
-import { env } from '$env/dynamic/private';
-
 import * as schema from './schema';
 
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import { mkdir } from 'node:fs/promises';
-import { dirname } from 'node:path';
+import * as dotenv from 'dotenv';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import pkg, { type PoolConfig } from 'pg';
 
-if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
+const { Pool } = pkg;
+
+dotenv.config();
+
+if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
 // Create the directory path if it doesn't exist
-await mkdir(dirname(env.DATABASE_URL), { recursive: true });
+function get_config() {
+	// @type import("pg").PoolConfig
+	const object: PoolConfig = {
+		connectionString: process.env.DATABASE_URL
+	};
+	return object;
+}
 
-const client = new Database(env.DATABASE_URL);
-export const db = drizzle(client, { schema });
+export const pool = new Pool(get_config());
+export const db = drizzle(pool, { schema });
 migrate(db, { migrationsFolder: 'drizzle' });
