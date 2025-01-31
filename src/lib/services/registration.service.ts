@@ -6,7 +6,7 @@ import {
 } from '$lib/server/db/schema';
 import type { ClassOptionType } from '$lib/types';
 
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 export type CreateRegistrationPayloadType = Pick<
 	RegistrationType,
@@ -34,7 +34,8 @@ const create_registration = async (
 		.returning();
 };
 
-const get_all_registrations = async () => db.select().from(registration_table);
+const get_all_registrations = async () =>
+	db.select().from(registration_table).orderBy(desc(registration_table.created_at));
 
 const get_registration_by_id = async (id?: string | null): Promise<RegistrationType | undefined> =>
 	id ? db.query.registration_table.findFirst({ where: eq(registration_table.id, id) }) : undefined;
