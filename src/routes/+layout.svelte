@@ -40,9 +40,6 @@
 <ModeWatcher />
 
 <div class="relative flex min-h-screen flex-col">
-	<div class="fixed right-0 top-0">
-		<LightSwitch />
-	</div>
 	{#if page.data.is_admin}
 		<header class="inset-x-0 top-0 z-20 mx-auto flex w-full max-w-5xl">
 			<nav>
@@ -134,6 +131,9 @@
 			</div>
 		</section>
 	</main>
+	<div class="fixed right-0 top-0 z-20">
+		<LightSwitch />
+	</div>
 	<footer class="flex items-center justify-center">
 		<span class="text-sm">
 			designed and hosted by <Button
