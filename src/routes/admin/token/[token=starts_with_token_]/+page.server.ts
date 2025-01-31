@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { create_session, generate_session_token, set_session_token_cookie } from '$lib/auth';
 import { cannot_be_logged_in } from '$lib/server/middleware/auth';
 import auth_service from '$lib/services/auth.service';
@@ -21,12 +21,12 @@ export const actions: Actions = {
 
 		const { token } = event.params;
 		if (!token) {
-			return redirect(403, '/');
+			return fail(403);
 		}
 
 		const user = await auth_service.get_user_from_token(token);
 		if (!user) {
-			return redirect(403, '/');
+			return fail(403);
 		}
 
 		const { auth_token, expires_at } = await auth_service.authenticate_user(user.id);
