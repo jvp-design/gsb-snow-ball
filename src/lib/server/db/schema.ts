@@ -1,9 +1,12 @@
+import { payment_status_options } from '../../types/db-options';
 import { new_id } from '../../utils/id';
 
 import { type InferInsertModel, type InferSelectModel, sql } from 'drizzle-orm';
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, pgEnum, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const registration_table = sqliteTable('registrations', {
+export const payment_status_choices = pgEnum('payment_status_choices', payment_status_options);
+
+export const registration_table = pgTable('registrations', {
 	id: text('id')
 		.$defaultFn(() => new_id('registration'))
 		.primaryKey(),
@@ -14,15 +17,24 @@ export const registration_table = sqliteTable('registrations', {
 	corsages: integer('corsages').notNull().default(0),
 	boutonnieres: integer('boutonnieres').notNull().default(0),
 	stripe_session_id: text('stripe_session_id'),
-	payment_status: text('payment_status').default('not_applicable'), // pending, paid, canceled, not_applicable
+	payment_status: payment_status_choices('payment_status').default('not_applicable'), // pending, paid, canceled, not_applicable
 	amount_paid: integer('amount_paid').default(0),
-	created_at: integer('created_at', { mode: 'timestamp' })
+	created_at: timestamp('created_at')
 		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
-	updated_at: integer('updated_at', { mode: 'timestamp' })
+		.default(sql`now()`),
+	updated_at: timestamp('updated_at')
 		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+		.default(sql`now()`)
 });
 
 export type RegistrationType = InferSelectModel<typeof registration_table>;
 export type NewRegistrationType = InferInsertModel<typeof registration_table>;
+
+export const user_table = pgTable('users', {
+	id: text('id')
+		.$defaultFn(() => new_id('user'))
+		.primaryKey(),
+	email: text('email').notNull(),
+	token: text('token').notNull(),
+	token_expiration: timestamp('token_expiration')
+});

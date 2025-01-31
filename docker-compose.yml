@@ -6,6 +6,18 @@ volumes:
 #  local_mongo_data_backups: {}
 
 services:
+  postgres:
+    image: postgres
+    container_name: gsb_snow_ball
+    ports:
+      - '5432:5432'
+    volumes:
+      - local_pg_data:/var/lib/postgresql/data:Z
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+
   mailhog:
     image: mailhog/mailhog:v1.0.0
     container_name: mailhog_gsb_forms

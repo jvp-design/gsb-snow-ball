@@ -15,7 +15,8 @@
 		"db:generate": "drizzle-kit generate",
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"db:start": "docker-compose up"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -26,8 +27,8 @@
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.10",
 		"@tailwindcss/typography": "^0.5.16",
-		"@types/better-sqlite3": "^7.6.12",
 		"@types/luxon": "^3.4.2",
+		"@types/pg": "^8.11.11",
 		"@typescript-eslint/eslint-plugin": "^8.22.0",
 		"@typescript-eslint/parser": "^8.22.0",
 		"autoprefixer": "^10.4.20",
@@ -66,10 +67,10 @@
 	},
 	"dependencies": {
 		"@jvp/dual-mailer": "^0.6.1",
-		"better-sqlite3": "^11.8.0",
 		"drizzle-orm": "^0.38.4",
 		"luxon": "^3.5.0",
 		"mode-watcher": "^0.5.1",
+		"pg": "^8.13.1",
 		"stripe": "^17.6.0"
 	}
 }
