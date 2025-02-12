@@ -212,86 +212,86 @@
 				</FieldErrors>
 			</div>
 		</Fieldset>
-		<Separator />
-		<h3 class="font-medium lg:text-lg xl:text-xl">
-			Corsage/Boutonnière Purchase <small>(Optional)</small>
-		</h3>
-		<p>
-			If you would like to purchase any corsages or boutonnières for the snow ball, please do so by
-			indicating below how many of each you would like to purchase.
-		</p>
-		<FlowersCountdown />
-		<Field {form} name="corsages" class="space-y-0">
-			<Control>
-				{#snippet children({ props })}
-					<div class="flex items-center justify-between">
-						<Label># of Corsages</Label>
-						<span>$25 each</span>
-					</div>
-					<Input
-						{...props}
-						{...$constraints.corsages}
-						type="number"
-						bind:value={$formData.corsages}
-					/>
-				{/snippet}
-			</Control>
-			<FieldErrors>
-				{#snippet children({ errors, errorProps })}
-					<span
-						class="{errors?.length ? 'opacity-100' : 'opacity-0'} dark:text-red-200"
-						{...errorProps}
-					>
-						{errors[0]}
-					</span>
-				{/snippet}
-			</FieldErrors>
-		</Field>
-		<Field {form} name="boutonnieres" class="space-y-0">
-			<Control>
-				{#snippet children({ props })}
-					<div class="flex items-center justify-between">
-						<Label># of Boutonnières</Label>
-						<span>$25 each</span>
-					</div>
-					<Input
-						{...props}
-						{...$constraints.boutonnieres}
-						type="number"
-						bind:value={$formData.boutonnieres}
-					/>
-				{/snippet}
-			</Control>
-			<FieldErrors>
-				{#snippet children({ errors, errorProps })}
-					<span
-						class="{errors?.length ? 'opacity-100' : 'opacity-0'} dark:text-red-200"
-						{...errorProps}
-					>
-						{errors[0]}
-					</span>
-				{/snippet}
-			</FieldErrors>
-		</Field>
-		<div class="flex items-start justify-between">
-			<div>
-				<p>
-					Total: {total_string}
-				</p>
-				{#if total > 0}
-					<p transition:fade class="text-sm italic text-primary">
-						You must complete the payment on the following page for your registration to be
-						submitted
-					</p>
-				{/if}
-			</div>
-			<Button type="submit" class="flex min-w-[100px] items-center justify-center">
-				{#if loading}
-					<Loader class="animate-spin" />
-				{:else}
-					Submit
-				{/if}
-			</Button>
-		</div>
+		<!--		<Separator />-->
+		<!--		<h3 class="font-medium lg:text-lg xl:text-xl">-->
+		<!--			Corsage/Boutonnière Purchase <small>(Optional)</small>-->
+		<!--		</h3>-->
+		<!--		<p>-->
+		<!--			If you would like to purchase any corsages or boutonnières for the snow ball, please do so by-->
+		<!--			indicating below how many of each you would like to purchase.-->
+		<!--		</p>-->
+		<!--		<FlowersCountdown />-->
+		<!--		<Field {form} name="corsages" class="space-y-0">-->
+		<!--			<Control>-->
+		<!--				{#snippet children({ props })}-->
+		<!--					<div class="flex items-center justify-between">-->
+		<!--						<Label># of Corsages</Label>-->
+		<!--						<span>$25 each</span>-->
+		<!--					</div>-->
+		<!--					<Input-->
+		<!--						{...props}-->
+		<!--						{...$constraints.corsages}-->
+		<!--						type="number"-->
+		<!--						bind:value={$formData.corsages}-->
+		<!--					/>-->
+		<!--				{/snippet}-->
+		<!--			</Control>-->
+		<!--			<FieldErrors>-->
+		<!--				{#snippet children({ errors, errorProps })}-->
+		<!--					<span-->
+		<!--						class="{errors?.length ? 'opacity-100' : 'opacity-0'} dark:text-red-200"-->
+		<!--						{...errorProps}-->
+		<!--					>-->
+		<!--						{errors[0]}-->
+		<!--					</span>-->
+		<!--				{/snippet}-->
+		<!--			</FieldErrors>-->
+		<!--		</Field>-->
+		<!--		<Field {form} name="boutonnieres" class="space-y-0">-->
+		<!--			<Control>-->
+		<!--				{#snippet children({ props })}-->
+		<!--					<div class="flex items-center justify-between">-->
+		<!--						<Label># of Boutonnières</Label>-->
+		<!--						<span>$25 each</span>-->
+		<!--					</div>-->
+		<!--					<Input-->
+		<!--						{...props}-->
+		<!--						{...$constraints.boutonnieres}-->
+		<!--						type="number"-->
+		<!--						bind:value={$formData.boutonnieres}-->
+		<!--					/>-->
+		<!--				{/snippet}-->
+		<!--			</Control>-->
+		<!--			<FieldErrors>-->
+		<!--				{#snippet children({ errors, errorProps })}-->
+		<!--					<span-->
+		<!--						class="{errors?.length ? 'opacity-100' : 'opacity-0'} dark:text-red-200"-->
+		<!--						{...errorProps}-->
+		<!--					>-->
+		<!--						{errors[0]}-->
+		<!--					</span>-->
+		<!--				{/snippet}-->
+		<!--			</FieldErrors>-->
+		<!--		</Field>-->
+		<!--		<div class="flex items-start justify-between">-->
+		<!--			<div>-->
+		<!--				<p>-->
+		<!--					Total: {total_string}-->
+		<!--				</p>-->
+		<!--				{#if total > 0}-->
+		<!--					<p transition:fade class="text-sm italic text-primary">-->
+		<!--						You must complete the payment on the following page for your registration to be-->
+		<!--						submitted-->
+		<!--					</p>-->
+		<!--				{/if}-->
+		<!--			</div>-->
+		<!--		</div>-->
+		<Button type="submit" class="flex min-w-[100px] items-center justify-center">
+			{#if loading}
+				<Loader class="animate-spin" />
+			{:else}
+				Submit
+			{/if}
+		</Button>
 	</form>
 </div>
